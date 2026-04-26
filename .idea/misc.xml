@@ -17,7 +17,14 @@
       <list>
         <option value="$PROJECT_DIR$/Order_Service/pom.xml" />
         <option value="$PROJECT_DIR$/Product_Service/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery_server/pom.xml" />
+        <option value="$PROJECT_DIR$/discorvery_server/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/discovery_server/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="21" project-jdk-type="JavaSDK">

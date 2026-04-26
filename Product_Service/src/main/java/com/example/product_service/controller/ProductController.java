@@ -3,6 +3,7 @@ package com.example.product_service.controller;
 import com.example.product_service.dto.BaseResponse;
 import com.example.product_service.dto.ProductFilter;
 import com.example.product_service.dto.request.CreateProductReq;
+import com.example.product_service.dto.request.LockProductReq;
 import com.example.product_service.entity.Product;
 import com.example.product_service.service.ProductService;
 import jakarta.validation.Valid;
@@ -10,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +24,11 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<BaseResponse<Product>> create(@RequestBody @Valid CreateProductReq req){
         return ResponseEntity.ok(new BaseResponse<>(productService.create(req),"success"));
+    }
+    @PutMapping("/lock")
+    public ResponseEntity<BaseResponse<Boolean>> lock(@RequestBody @Valid LockProductReq req){
+        productService.lock(req);
+        return ResponseEntity.ok(new BaseResponse<>(true,"success"));
     }
 
     @PostMapping("/search")

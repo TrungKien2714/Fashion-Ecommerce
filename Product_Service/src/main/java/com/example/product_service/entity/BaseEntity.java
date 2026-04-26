@@ -1,6 +1,7 @@
 package com.example.product_service.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -18,6 +19,8 @@ import java.time.Instant;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+    @Convert(converter = BooleanToShortConverter.class)
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     @CreatedDate

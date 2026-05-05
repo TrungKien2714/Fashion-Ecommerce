@@ -1,0 +1,33 @@
+server:
+  port: 8282
+eureka:
+  client:
+    service-url:
+        defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: api_gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: order-service
+              uri: lb://order-service
+              predicates:
+                - Path=/v1/orders/**
+            - id: prodcut-service
+              uri:
+                lb://product-service
+              predicates:
+                - Path=/v1/products/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8085/realms/kien
+          jwk-set-uri: http://localhost:8085/realms/kien/protocol/openid-connect/certs
+
+logging:
+  level:
+    root: info

@@ -1,0 +1,11 @@
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: kien
+  resource: ${KEYCLOAK_CLIENT_ID:auth_service}
+  credentials:
+    secret: "vvGps71lIMGOskQq6BRsxrDWNPPRbUED"
+spring:
+  application:
+    name: auth_service
+server:
+  port: 8090

@@ -1,16 +1,23 @@
-version: '3.0'
+version: '3.4'
 services:
   mysql-vti:
     image: mysql:8.0
     ports:
-      - "3307:3307"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: "testing_system"
-      MYSQL_ROOT_PASSWORD: "123456789"
+      MYSQL_ROOT_PASSWORD: "123456"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
     networks:
       - keycloak-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   redis:
     image: redis:7.0-alpine
@@ -73,16 +80,18 @@ services:
       KC_DB_URL_PORT: 3306
       KC_DB_URL_DATABASE: keycloak
       KC_DB_USERNAME: root
-      KC_DB_PASSWORD: 123456789
+      KC_DB_PASSWORD: 123456
       KC_HOSTNAME: localhost
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: password
 
     command: start-dev
     ports:
-      - "8180:8080"
+      - "8085:8080"
     depends_on:
-      - mysql-vti
+      mysql-vti:
+        condition: service_healthy
+    restart: on-failure
     networks:
       - keycloak-network
   elasticsearch:

@@ -5,6 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -19,6 +24,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
 
     @Id
@@ -52,18 +58,22 @@ public class Order {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_date")
+    @CreatedDate
     private Instant createdDate;
 
     @Size(max = 255)
     @Column(name = "created_by")
+    @CreatedBy
     private String createdBy;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "last_modified_date")
+    @LastModifiedDate
     private Instant lastModifiedDate;
 
     @Size(max = 255)
     @Column(name = "last_modified_by")
+    @LastModifiedBy
     private String lastModifiedBy;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -19,6 +19,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api_gateway" />
       </profile>
+      <profile name="Annotation profile for auth_service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="auth_service" />
+      </profile>
       <profile name="Annotation profile for Product_Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -29,15 +38,6 @@
         </processorPath>
         <module name="Product_Service" />
         <module name="Order_Service" />
-      </profile>
-      <profile name="Annotation profile for auth_service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
-        <module name="auth_service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

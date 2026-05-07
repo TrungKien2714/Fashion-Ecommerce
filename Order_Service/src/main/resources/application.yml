@@ -21,3 +21,9 @@ spring:
         requests.timeout.ms: 15000
         linger.ms: 0
       acks: all
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html

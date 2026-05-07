@@ -26,6 +26,13 @@ spring:
     type: redis
     redis:
       time-to-live: 60000
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+
 logging:
   level:
     org.springframework.cache: trace

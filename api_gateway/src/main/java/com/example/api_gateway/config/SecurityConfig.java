@@ -26,6 +26,12 @@ public class SecurityConfig {
         http
             .csrf(ServerHttpSecurity.CsrfSpec::disable)
             .authorizeExchange(exchanges -> exchanges
+                    .pathMatchers(
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/swagger-ui/index.html",
+                            "/v3/api-docs/**",
+                            "/webjars/**").permitAll()
                     .pathMatchers("/v1/products/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                     .pathMatchers("/v1/orders/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                     .anyExchange().authenticated()

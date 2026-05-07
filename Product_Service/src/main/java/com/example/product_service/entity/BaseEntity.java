@@ -12,13 +12,16 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Getter
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public class BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Convert(converter = BooleanToShortConverter.class)
     @Column(name = "is_deleted")
     private boolean isDeleted;

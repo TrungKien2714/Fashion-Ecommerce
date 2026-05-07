@@ -4,6 +4,7 @@ import com.example.product_service.dto.BaseResponse;
 import com.example.product_service.dto.ProductFilter;
 import com.example.product_service.dto.request.CreateProductReq;
 import com.example.product_service.dto.request.LockProductReq;
+import com.example.product_service.dto.UpdateProductReq;
 import com.example.product_service.entity.Product;
 import com.example.product_service.service.ProductService;
 import jakarta.validation.Valid;
@@ -35,5 +36,12 @@ public class ProductController {
     public ResponseEntity<BaseResponse<List<Product>>> search(@RequestBody ProductFilter filter){
         List<Product> products =productService.search(filter);
         return ResponseEntity.ok(new BaseResponse<>(products,"success"));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseResponse<Product>> update(
+            @PathVariable String id,
+            @RequestBody @Valid UpdateProductReq req) {
+        Product product = productService.update(id, req);
+        return ResponseEntity.ok(new BaseResponse<>(product, "success"));
     }
 }

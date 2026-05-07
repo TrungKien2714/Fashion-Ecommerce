@@ -3,7 +3,7 @@ keycloak:
   realm: kien
   resource: ${KEYCLOAK_CLIENT_ID:auth_service}
   credentials:
-    secret: "vvGps71lIMGOskQq6BRsxrDWNPPRbUED"
+    secret: "zYgtTkTMOpmsFz9tFoGXsjkxXX7J1T3F"
 spring:
   application:
     name: auth_service

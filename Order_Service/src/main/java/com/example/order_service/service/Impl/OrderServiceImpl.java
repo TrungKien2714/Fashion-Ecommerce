@@ -42,8 +42,9 @@ public class OrderServiceImpl implements OrderService {
                 .map(String::trim)
                 .distinct()
                 .toList();
-
+        log.info("Product Ids: {}", productIds);
         List<ProductDTO> products = productClient.getProductByIds(new ProductFilter(productIds));
+        log.info("Finish to send get products from product-service with size [{}]", products.size());
         Map<String, ProductDTO> productById = products.stream()
                 .filter(productDTO -> productDTO.getId() != null)
                 .collect(Collectors.toMap(ProductDTO::getId, productDTO -> productDTO, (first, second) -> first));
@@ -61,8 +62,8 @@ public class OrderServiceImpl implements OrderService {
         order.setNote(request.getNote());
         order.setStatus(OrderStatus.NEW.name());
         order.setTotalPrice(0);
-
         Order saveOrder = orderRepository.save(order);
+        log.info("Save order: {}", saveOrder);
         int totalAmount = 0;
         List<OrderItem> orderItems = new ArrayList<>();
 

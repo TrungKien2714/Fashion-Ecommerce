@@ -1,10 +1,12 @@
 package com.example.product_service.service.impl;
 
 import com.example.product_service.dto.ProductFilter;
+import com.example.product_service.dto.UpdateProductReq;
 import com.example.product_service.dto.request.CreateProductReq;
 import com.example.product_service.dto.request.LockProductItem;
 import com.example.product_service.dto.request.LockProductReq;
 import com.example.product_service.entity.Product;
+import com.example.product_service.exeption.ApplicationException;
 import com.example.product_service.mapper.ProductMapper;
 import com.example.product_service.repository.CategoryRepository;
 import com.example.product_service.repository.ProductRepository;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
         }
     @Override
+    @Cacheable(value = "products",key = "#filter.ids",condition = "#filter.ids!=null && !#filter.ids.isEmpty()")
     public List<Product> search(ProductFilter filter) {
         return productRepository.findByIdIn(filter.getIds());
      }
@@ -85,5 +89,22 @@ public class ProductServiceImpl implements ProductService {
             lock.unlock();
             log.info("Unlock success for [{}]",lockKey);
         }
+    }
+    @Override
+    @CacheEvict(value = "products", allEntries = true)
+    public Product update(String id, UpdateProductReq updateProductReq) {
+        var existedCategoryOptional = categoryRepository.findById(updateProductReq.getCategoryId());
+        if (existedCategoryOptional.isEmpty()) {
+            throw new ApplicationException("category not found");
+        }
+
+        var productOptional = productRepository.findById(id);
+        if (productOptional.isEmpty()) {
+            throw new ApplicationException("product not found");
+        }
+
+        var existedProduct = productOptional.get();
+        var updatingProduct = productMapper.fromUpdateRequest(updateProductReq, existedProduct);
+        return productRepository.save(updatingProduct);
     }
 }

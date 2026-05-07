@@ -27,6 +27,8 @@ services:
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes
+    networks:
+      - redis-network
 
   # UI để quản lý Redis
   redis-insight:
@@ -38,6 +40,8 @@ services:
       - redis-insight-data:/data
     depends_on:
       - redis
+    networks:
+      - redis-network
 
   zookeeper:
     container_name: zookeeper
@@ -147,3 +151,4 @@ volumes:
 networks:
   keycloak-network:
   optimize-network:
+  redis-network:

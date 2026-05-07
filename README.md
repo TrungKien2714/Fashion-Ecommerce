@@ -1,4 +1,4 @@
-# Mentor
+# Fashion-Ecommerce
 
 Microservices-based e-commerce backend with Spring Boot, Spring Cloud, Kafka, Redis, and Keycloak. This repo includes a discovery server, API gateway, auth service, order service, and product service.
 

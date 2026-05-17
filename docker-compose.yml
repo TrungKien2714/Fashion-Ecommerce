@@ -142,6 +142,14 @@ services:
     ports:
       - "5601:5601"
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - optimize-network
+
 volumes:
   mysql-data:
   zookeeper-data:

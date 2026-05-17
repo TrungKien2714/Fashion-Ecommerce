@@ -32,9 +32,25 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html
-
 logging:
+  pattern:
+    correlation: "[${spring.application.name:},%mdc{traceId:-},%mdc{spanId:-}]"
   level:
     org.springframework.cache: trace
     com.github.benmanes.caffeine.cache: debug
     org.springframework.data.redis: debug
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  observations:
+    enable:
+      spring:
+        kafka: true

@@ -3,9 +3,16 @@ keycloak:
   realm: kien
   resource: ${KEYCLOAK_CLIENT_ID:auth_service}
   credentials:
-    secret: "zYgtTkTMOpmsFz9tFoGXsjkxXX7J1T3F"
+    secret: "TogMHBE8XIyejfmZ3DS4GF0bpahBHE6Y"
 spring:
   application:
     name: auth_service
 server:
   port: 8090
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans

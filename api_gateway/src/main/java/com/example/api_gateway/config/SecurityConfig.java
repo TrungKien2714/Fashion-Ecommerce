@@ -53,7 +53,7 @@ public class SecurityConfig {
             List<String> roles = (List<String>) backendAccess.get("roles");
             if (roles == null) return List.of();
             return roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                     .collect(Collectors.toList());
         });
         return new ReactiveJwtAuthenticationConverterAdapter(converter);
